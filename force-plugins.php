@@ -1,5 +1,5 @@
 <?php
-
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 require_once dirname( __FILE__ ) . '/plugin-activation.php';
 
 add_action( 'tgmpa_register', 'my_theme_register_required_plugins' );
@@ -8,148 +8,180 @@ function my_theme_register_required_plugins() {
         [   
             'name'               => 'Google Analytics',
             'slug'               => 'google-analytics-for-wordpress',
+            'filename'           => 'googleanalytics.php',
             'required'           => true,
             'force_activation'   => true,
         ],
         [
             'name'               => 'Akismet',
             'slug'               => 'akismet',
+            'filename'           => 'akismet.php',
             'required'           => true,
             'force_activation'   => true,
         ],
         [
             'name'               => 'Disqus Comment System',
             'slug'               => 'disqus-comment-system',
+            'filename'           => 'disqus.php',
             'required'           => true,
             'force_activation'   => true,
         ],
         [
             'name'               => 'Feedburner Plugin',
             'slug'               => 'feedburner-plugin',
+            'filename'           => 'fdfeedburner.php',
             'required'           => true,
             'force_activation'   => true,
         ],
         [
             'name'               => 'Contact Form 7',
             'slug'               => 'contact-form-7',
+            'filename'           => 'wp-contact-form-7.php',
             'required'           => true,
             'force_activation'   => true,
         ],
         [
             'name'               => 'Wordpress GZip Compression',
             'slug'               => 'wordpress-gzip-compression',
+            'filename'           => 'ezgz.php',
             'required'           => true,
             'force_activation'   => true,
         ],
         [
             'name'               => 'WP Smush it',
             'slug'               => 'wp-smushit',
+            'filename'           => 'wp-smush.php',
             'required'           => true,
             'force_activation'   => true,
         ],
         [
             'name'               => 'WP Super Cache',
             'slug'               => 'wp-super-cache',
+            'filename'           => 'wp-cache.php',
             'required'           => true,
             'force_activation'   => true,
         ],
         [
             'name'               => 'Force Strong Passwords',
             'slug'               => 'force-strong-passwords',
+            'filename'           => 'slt-force-strong-passwords.php',
             'required'           => true,
             'force_activation'   => true,
         ],
         [
             'name'               => 'Limit Login Attempts',
             'slug'               => 'limit-login-attempts',
+            'filename'           => 'limit-login-attempts.php',
             'required'           => true,
             'force_activation'   => true,
         ],
         [
             'name'               => 'Google Authenticator',
             'slug'               => 'google-authenticator',
+            'filename'           => 'google-authenticator.php',
             'required'           => true,
             'force_activation'   => true,
         ],
         [
-            'name'               => 'WP DB Backup',
-            'slug'               => 'wp-db-backup',
+            'name'               => 'WP Database Backup',
+            'slug'               => 'wp-database-backup',
+            'filename'           => 'wp-database-backup.php',
             'required'           => true,
             'force_activation'   => true,
         ],
         [
             'name'               => 'Wordpress SEO',
             'slug'               => 'wordpress-seo',
+            'filename'           => 'wp-seo.php',
             'required'           => true,
             'force_activation'   => true,
         ],
         [
             'name'               => 'Google Sitemap Generator',
             'slug'               => 'google-sitemap-generator',
+            'filename'           => 'sitemap.php',
             'required'           => true,
             'force_activation'   => true,
         ],
         [
             'name'               => 'Headspace2',
             'slug'               => 'headspace2',
+            'filename'           => 'headspace.php',
             'required'           => true,
             'force_activation'   => true,
         ],
         [
             'name'               => 'Digg Digg',
             'slug'               => 'digg-digg',
+            'filename'           => 'digg-digg.php',
             'required'           => true,
             'force_activation'   => true,
         ],
         [
             'name'               => 'Theme Preview',
             'slug'               => 'theme-preview',
+            'filename'           => 'theme-preview.php',
             'required'           => true,
             'force_activation'   => true,
         ],
         [
             'name'               => 'Wordpress Mobile Pack',
             'slug'               => 'wordpress-mobile-pack',
+            'filename'           => 'wordpress-mobile-pack.php',
             'required'           => true,
             'force_activation'   => true,
         ],
         [
             'name'               => 'WP Pagenavi',
             'slug'               => 'wp-pagenavi',
+            'filename'           => 'wp-pagenavi.php',
             'required'           => true,
             'force_activation'   => true,
         ],
         [
             'name'               => 'WP No Category Base',
             'slug'               => 'wp-no-category-base',
+            'filename'           => 'wp-no-category-base.php',
             'required'           => true,
             'force_activation'   => true,
         ],
         [
             'name'               => 'Yet Another Related Posts Plugin',
             'slug'               => 'yet-another-related-posts-plugin',
+            'filename'           => 'yarpp.php',
             'required'           => true,
             'force_activation'   => true,
         ],
         [
             'name'               => 'Redirection',
             'slug'               => 'redirection',
+            'filename'           => 'redirection.php',
             'required'           => true,
             'force_activation'   => true,
         ],
         [
             'name'               => 'Wordpress Importer',
             'slug'               => 'wordpress-importer',
+            'filename'           => 'wordpress-importer.php',
             'required'           => true,
             'force_activation'   => true,
         ],
         [
             'name'               => 'WP Email',
             'slug'               => 'wp-email',
+            'filename'           => 'wp-email.php',
             'required'           => true,
             'force_activation'   => true,
         ],
     ];
+
+    foreach ($plugins as $plugin) {
+        $plugin_dir = $plugin['slug'].'/'.$plugin['filename'];
+        if(is_plugin_active($plugin_dir)){
+            unset($plugin['force_activation']);
+            $plugins = $plugin;
+        }
+    }
 
     $config = array(
         'default_path' => '',
